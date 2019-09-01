@@ -1,10 +1,8 @@
 <?php
 require 'menus/header.php';
 ?>
+    <main>
 
-<main>
-    <h2>Test</h2>
-</main>
-
+    </main>
 <?php
 require 'menus/footer.php';
