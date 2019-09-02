@@ -1,3 +1,7 @@
+<?php
+    require __DIR__ . '/../includes/config.php';
+?>
+
 <!doctype html>
 <html lang="en">
 <head>

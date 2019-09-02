@@ -1,5 +1,5 @@
 <?php
-require 'menus/header.php';
+require __DIR__ . 'menus/header.php';
 ?>
     <main>
 
