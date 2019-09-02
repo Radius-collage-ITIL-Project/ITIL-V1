@@ -6,12 +6,18 @@ require 'menus/header.php';
             <h2>Ticket Aanmaken.</h2>
         </div>
         <div class="ticketform">
-            <form>
+            <form action="includes/controllers/createTicketController.php" method="post">
+                <input type="hidden" name="type" value="ticketcustomerdetails" required>
                 <h3 class="lead">Deel 1 | Klanten gegevens</h3>
-                <div class="form-row border p-2 rounded my-2">
+                <div class="form-row border p-2 rounded my-2 shadow">
+                    <?php
+                        if (isset($_GET['err'])) {
+                            echo "<p class=\"alert-danger p-2 col-12 rounded border shadow-sm\">{$_GET['err']}</p>";
+                        }
+                    ?>
                     <div class="form-group col-md-5">
                         <label for="firstname">Voornaam</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Bert" required>
+                        <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Bert" required>
                     </div>
 
                     <div class="form-group col-md-2">
@@ -35,8 +41,8 @@ require 'menus/header.php';
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label for="companyname">Bedrijfs naam</label>
-                        <input type="text" name="companyname" class="form-control" id="companyname" placeholder="business of example" required>
+                        <label for="businessname">Bedrijfs naam</label>
+                        <input type="text" name="businessname" class="form-control" id="businessname" placeholder="business of example" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Volgende</button>
