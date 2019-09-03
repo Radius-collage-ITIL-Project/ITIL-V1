@@ -35,7 +35,8 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
         exit;
     }
 
-    $sql = "INSERT INTO `customers`(`id`, `first`, `middel`, `last`, `email`, `phone`, `business`) VALUES (:id, :first, :middel, :last, :email, :phone, :business)";
+    $sql = "INSERT INTO `customers`(`id`, `first`, `middel`, `last`, `email`, `phone`, `business`) 
+            VALUES (:id, :first, :middel, :last, :email, :phone, :business)";
     $prepare = $db->prepare($sql);
     $prepare->execute([
        'id'        => null,
