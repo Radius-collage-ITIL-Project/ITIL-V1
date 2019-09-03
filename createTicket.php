@@ -6,7 +6,7 @@ require 'menus/header.php';
             <h2>Ticket Aanmaken.</h2>
         </div>
         <div class="ticketform">
-            <form action="includes/controllers/createTicketController.php" method="post">
+            <form class="was-validated" action="includes/controllers/createTicketController.php" method="post">
                 <input type="hidden" name="type" value="ticketcustomerdetails" required>
                 <h3 class="lead">Deel 1 | Klanten gegevens</h3>
                 <div class="form-row border p-2 rounded my-2 shadow">
