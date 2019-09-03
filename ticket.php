@@ -10,7 +10,21 @@ $prepare->execute([
 ]);
 $customer = $prepare->fetch(2);
 //dumpen van de opgehaalde data
-var_dump($customer);
+
+$sql = 'SELECT * FROM categories';
+$prepare = $db->prepare($sql);
+$prepare->execute([ ]);
+$categories = $prepare->fetchAll(2);
+//dumpen van de opgehaalde data
+
+$sql = 'SELECT * FROM threat';
+$prepare = $db->prepare($sql);
+$prepare->execute([ ]);
+$threats = $prepare->fetchAll(2);
+//dumpen van de opgehaalde data
+
+
+
 
 
 ?>
@@ -19,31 +33,44 @@ var_dump($customer);
             <h2>Ticket.</h2>
         </div>
         <div class="ticketform">
-            <form>
+            <form class="was-validated" action="includes/controllers/createTicketController.php" method="post">
                 <h3 class="lead">Deel 2 | Ticket gegevens</h3>
                 <div class="form-row border p-2 rounded my-2">
-                    <p>Categorie | </p>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" type="button">Action</button>
-                            <button class="dropdown-item" type="button">Another action</button>
-                            <button class="dropdown-item" type="button">Something else here</button>
-                        </div>
+                    <div class="form-group col-12">
+                        <label for="title">Titel</label>
+                        <input class="form-control" type="text" name="title" required>
                     </div>
-                    <p>Employee | </p>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" type="button">Action</button>
-                            <button class="dropdown-item" type="button">Another action</button>
-                            <button class="dropdown-item" type="button">Something else here</button>
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label for="category">Categorie</label>
+                        <select class="custom-select" name="category" required>
+                            <option value="">Selecteer een categorie</option>
+                            <?php
+                                foreach($categories as $category){
+                                    echo "<option value=\"{$category['id']}\">{$category['name']}</option>";
+                                }
+                            ?>
+                        </select>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label for="threatlevel">Threat Level</label>
+                            <select class="custom-select" name="threatlevel" required>
+                                <option value="">Kies een threat level</option>
+                                <?php
+                                foreach($threats as $threat){
+                                    echo "<option value=\"{$threat['id']}\">{$threat['threat']} - {$threat['max-duration']}u</option>";
+                                }
+                                ?>
+                            </select>
+                            <div class="invalid-feedback">Example invalid custom select feedback</div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="caller">Lijn Niveau</label>
+                            <select class="custom-select" name="caller" required>
+                                <option value="1">1e lijn</option>
+                                <option value="2">2e Lijn</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Volgende</button>
