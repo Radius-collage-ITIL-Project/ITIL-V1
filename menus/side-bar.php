@@ -26,7 +26,7 @@
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-2 mt-3 mb-1 text-muted">Tickets</h6>
 
             <li class="nav-item">
-                <a class="nav-link py-1 px-2" href="./createTicket.php">Create</a>
+                <a class="nav-link py-1 px-2" href="./createCustomer.php">Create</a>
             </li>
         </ul>
     </div>
