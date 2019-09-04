@@ -1,4 +1,4 @@
-
+<?php
 require __DIR__ . '/../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' ) {
@@ -50,3 +50,38 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
     header("location: ../../index.php?succ=$succ");
     exit;
 }
+
+if ($_POST['type'] === 'ticketdetails') {
+    $customerId = trim(htmlentities($_POST['customerId']));
+    $title = trim(htmlentities($_POST['title']));
+    $category = trim(htmlentities($_POST['category']));
+    $threat = trim(htmlentities($_POST['threat']));
+    $caller = trim(htmlentities($_POST['caller-level']));
+
+    //checks of someting is empty
+    if (empty($title) || empty($threat) || empty($category) || empty($caller) || empty($customerId)) {
+        $err = "Er zijn 1 of meer velden niet ingevuld.";
+        header("location: ../../createTicket.php?err=$err");
+        exit;
+    }
+
+    $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category) 
+            VALUES (:customerid, :title, :threat, :callerlevel, :category)";
+    $prepare = $db->prepare($sql);
+    $prepare->execute([
+        'customerid'    => $customerId,
+        'title'         => $title,
+        'threat'        => $threat,
+        'callerlevel'  => $caller,
+        'category'      => $category
+    ]);
+    $succ = "ticket voltooid";
+    header("location: ../../index.php?succ=$succ");
+    exit;
+
+
+
+}
+
+header("location: ../../createTicket.php");
+exit;
