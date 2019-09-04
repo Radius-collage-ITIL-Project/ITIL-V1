@@ -37,7 +37,7 @@ require 'menus/header.php';
 
                     <div class="form-group col-md-6">
                         <label for="phonenumber">Telefoon nummer.</label>
-                        <input type="text" name="phonenumber" class="form-control" id="phonenumber" placeholder="0637379938" required>
+                        <input type="text" name="phonenumber" class="form-control" id="phonenumber" placeholder="0637379938" maxlength="10" minlength="10" required>
                     </div>
 
                     <div class="form-group col-md-12">

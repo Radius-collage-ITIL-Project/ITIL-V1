@@ -1,8 +1,8 @@
-
+<?php
 require __DIR__ . '/../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' ) {
-    header("location: ../../createTicket.php");
+    header("location: ../../createCustomer.php");
     exit;
 }
 
@@ -18,19 +18,19 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
     //checks of someting is empty
     if (empty($firstName) || empty($lastName) || empty($email) || empty($phoneNumber) || empty($businessName)) {
         $err = "Er zijn 1 of meer velden niet ingevuld.";
-        header("location: ../../createTicket.php?err=$err");
+        header("location: ../../createCustomer.php?err=$err");
         exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $err = "Het opgegeven email is onjuist";
-        header("location: ../../createTicket.php?err=$err");
+        header("location: ../../createCustomer.php?err=$err");
         exit;
     }
 
     if (!ctype_digit($phoneNumber) || strlen($phoneNumber) != 10) {
         $err = "Telefoon nummer is niet correct.";
-        header("location: ../../createTicket.php?err=$err");
+        header("location: ../../createCustomer.php?err=$err");
         exit;
     }
 
@@ -46,7 +46,10 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
        'phone'     => $phoneNumber,
        'business'  => $businessName
     ]);
+
+    $customerId = $db->lastInsertId();
+
     $succ = "Klant gegevens opgeslagen";
-    header("location: ../../index.php?succ=$succ");
+    header("location: ../../createTicket.php&customerId=$customerId");
     exit;
 }
