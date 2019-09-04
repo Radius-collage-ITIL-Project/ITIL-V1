@@ -75,7 +75,7 @@ if ($_POST['type'] === 'ticketdetails') {
         'customerid'    => $customerId,
         'title'         => $title,
         'threat'        => $threat,
-        'callerlevel'  => $caller,
+        'callerlevel'   => $caller,
         'category'      => $category
     ]);
     $succ = "ticket voltooid";
@@ -86,5 +86,5 @@ if ($_POST['type'] === 'ticketdetails') {
 
 }
 
-header("location: ../../createTicket.php");
+header("location: ../../index.php");
 exit;
