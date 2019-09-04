@@ -50,7 +50,7 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
     $customerId = $db->lastInsertId();
 
     $succ = "Klant gegevens opgeslagen";
-    header("location: ../../createTicket.php&customerId=$customerId");
+    header("location: ../../createTicket.php?customerId=$customerId");
     exit;
 }
 

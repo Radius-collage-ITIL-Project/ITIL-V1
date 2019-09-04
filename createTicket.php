@@ -4,7 +4,7 @@ $id = htmlentities($_GET['customerId']);
 $id = 1;
 require 'menus/header.php';
 //selecteren van de data
-$sql = 'SELECT id, first, middel, last FROM customer WHERE id = :id';
+$sql = 'SELECT id, first, middel, last FROM customers WHERE id = :id';
 $prepare = $db->prepare($sql);
 $prepare->execute([
     'id' => $id
@@ -18,9 +18,9 @@ $prepare->execute([ ]);
 $categories = $prepare->fetchAll(2);
 //dumpen van de opgehaalde data
 
-$sql = 'SELECT * FROM threat';
+$sql = 'SELECT * FROM threats';
 $prepare = $db->prepare($sql);
-$prepare->execute([ ]);
+$prepare->execute();
 $threats = $prepare->fetchAll(2);
 //dumpen van de opgehaalde data
 
