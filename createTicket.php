@@ -24,9 +24,33 @@ $prepare->execute();
 $threats = $prepare->fetchAll(2);
 //dumpen van de opgehaalde data
 
+/*
+$a = new DateTime('08:00');
+$b = new DateTime('16:00');
+$interval = $a->diff($b);
+
+echo $interval->format("%H");
+
+
+$now = new DateTime();
+echo $now->format('Y-m-d H:i:s');    // MySQL datetime format
+echo $now->getTimestamp();
 
 
 
+*/
+
+$sql = 'SELECT created_at FROM tickets WHERE id = 1';
+$prepare = $db->prepare($sql);
+$prepare->execute();
+$ticket = $prepare->fetch(2);
+//$solved = $date->diff($date);
+//echo $solved->Y;
+$createdAt = new DateTime($ticket['created_at']);
+$today = new DateTime(date("y-m-d H:i:s"));
+$solved = $today->diff($createdAt);
+echo $solved->d . "-" . $solved->m . "-" . $solved->y . " " . $solved->h . ":" . $solved->i . ":" . $solved->s ;
+exit;
 
 ?>
     <main>
