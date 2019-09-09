@@ -48,6 +48,8 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
     ]);
 
     $customerId = $db->lastInsertId();
+//    var_dump($customerId);
+//    die;
 
     $succ = "Klant gegevens opgeslagen";
     header("location: ../../createTicket.php?customerId=$customerId");
@@ -78,8 +80,14 @@ if ($_POST['type'] === 'ticketdetails') {
         'callerlevel'   => $caller,
         'category'      => $category
     ]);
+
+
+    $ticketId = $db->lastInsertId();
+
+
+
     $succ = "ticket voltooid";
-    header("location: ../../index.php?succ=$succ");
+    header("location: ../../index.php?ticketId=$ticketId&customerId=$customerId&succ=$succ");
     exit;
 
 
