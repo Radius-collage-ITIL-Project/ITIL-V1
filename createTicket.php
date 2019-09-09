@@ -39,7 +39,7 @@ echo $now->getTimestamp();
 
 
 */
-
+//Solved at ---
 $sql = 'SELECT created_at FROM tickets WHERE id = 1';
 $prepare = $db->prepare($sql);
 $prepare->execute();
