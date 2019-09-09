@@ -10,7 +10,6 @@ $sql = "SELECT * FROM employees ORDER BY solved_tickets DESC ";
 $employees = $db->query($sql)->fetchAll(2);
 ?>
 
-
         <main>
             <div class="employee information">
                 <table class="table">
