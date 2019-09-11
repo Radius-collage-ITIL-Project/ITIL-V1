@@ -1,7 +1,7 @@
 <?php
 // ophalen van data uit de database
 $id = htmlentities($_GET['customerId']);
-$id = 1;
+
 require 'menus/header.php';
 //selecteren van de data
 $sql = 'SELECT id, first, middel, last FROM customers WHERE id = :id';
@@ -36,7 +36,7 @@ $threats = $prepare->fetchAll(2);
         <div class="ticketform">
             <form class="was-validated" action="includes/controllers/createTicketController.php" method="post">
                 <input type="hidden" name="type" value="ticketdetails">
-                <input type="hidden" name="customerId" value="<=$id>">
+                <input type="hidden" name="customerId" value="<?=$id?>">
                 <h3 class="lead">Deel 2 | Ticket gegevens</h3>
                 <div class="form-row border p-2 rounded my-2">
                     <div class="form-group col-12">
