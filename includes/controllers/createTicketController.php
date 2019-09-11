@@ -93,5 +93,6 @@ if ($_POST['type'] === 'ticketdetails') {
 
 }
 
+
 header("location: ../../index.php");
 exit;
