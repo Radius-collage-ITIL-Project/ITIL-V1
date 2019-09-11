@@ -24,6 +24,19 @@ $prepare->execute();
 $threats = $prepare->fetchAll(2);
 //dumpen van de opgehaalde data
 
+$sql = 'SELECT * FROM roles';
+$prepare = $db->prepare($sql);
+$prepare->execute();
+$callerlvl = $prepare->fetchAll(2);
+//dumpen van de opgehaalde data
+
+$sql = 'SELECT * FROM tickets';
+$prepare = $db->prepare($sql);
+$prepare->execute();
+$status = $prepare->fetchAll(2);
+//dumpen van de opgehaalde data
+
+
 /*
 $a = new DateTime('08:00');
 $b = new DateTime('16:00');
@@ -49,8 +62,7 @@ $ticket = $prepare->fetch(2);
 $createdAt = new DateTime($ticket['created_at']);
 $today = new DateTime(date("y-m-d H:i:s"));
 $solved = $today->diff($createdAt);
-echo $solved->d . "-" . $solved->m . "-" . $solved->y . " " . $solved->h . ":" . $solved->i . ":" . $solved->s ;
-exit;
+echo ('Solution duration: '),$solved->d . "-" . $solved->m . "-" . $solved->y . " " . $solved->h . ":" . $solved->i . ":" . $solved->s ;
 
 ?>
     <main>
@@ -92,10 +104,22 @@ exit;
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="caller">Lijn Niveau</label>
+                            <label for="caller">Caller-level</label>
                             <select class="custom-select" name="caller-level" required>
-                                <option value="1">1e lijn</option>
-                                <option value="2">2e Lijn</option>
+                                <option value="1">Selecteer caller-level</option>
+                                <?php
+                                foreach ($callerlvl as $callerlvl){
+                                    echo "<option value=\"{$callerlvl['id']}\">{$callerlvl['name']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="solved">status</label>
+                            <select class="custom-select" name="solved" required>
+                                <option value="">Ticket Status</option>
+                                <option value="0">unsolved</option>
+                                <option value="1">solved</option>
                             </select>
                         </div>
                     </div>
