@@ -18,7 +18,8 @@ if (isset($_GET['category'])) {
 FROM tickets as t 
 INNER JOIN categories as c ON t.category = c.id
 INNER JOIN threats as th ON t.threat = th.id
-WHERE category = :id";
+WHERE category = :id
+ORDER BY t.created_at DESC";
     $prepare = $db->prepare($sql);
     $prepare->execute([
             'id' => $_GET['category']
@@ -33,7 +34,8 @@ $sql = "SELECT t.id as id,
                th.`threat` as threatlvl
 FROM tickets as t 
 INNER JOIN categories as c ON t.category = c.id
-INNER JOIN threats as th ON t.threat = th.id";
+INNER JOIN threats as th ON t.threat = th.id
+ORDER BY t.created_at DESC";
     $prepare = $db->prepare($sql);
     $prepare->execute();
 }
@@ -41,7 +43,7 @@ $tickets = $prepare->fetchAll(2);
 
 /* cat toevoegen */
 $sql = "SELECT DISTINCT
-              c.id,
+              c.id as id,
               c.name as category
 FROM tickets as t 
 INNER JOIN categories as c ON t.category = c.id
@@ -67,9 +69,10 @@ $categories = $prepare->fetchAll(2);
                         </button>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href=unreadedTickets.php>None</a>
                             <?php
                             foreach ($categories as $category){
-                                echo "<a href=unreadedTickets.php?category= {$category['id']}> {$category['category']}</a>";
+                                echo "<a href=unreadedTickets.php?category={$category['id']}> {$category['category']}</a>";
 
                             }
                             ?>
