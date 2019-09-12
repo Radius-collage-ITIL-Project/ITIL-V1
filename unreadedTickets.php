@@ -7,6 +7,24 @@
  */
 
 require __DIR__ . '/menus/header.php';
+
+if (isset($_GET['category'])) {
+    $sql = "SELECT t.id as id, 
+               t.title as title, 
+               c.name as category, 
+               t.threat as threat, 
+               t.created_at,
+               th.`threat` as threatlvl
+FROM tickets as t 
+INNER JOIN categories as c ON t.category = c.id
+INNER JOIN threats as th ON t.threat = th.id
+WHERE category = :id";
+    $prepare = $db->prepare($sql);
+    $prepare->execute([
+            'id' => $_GET['category']
+    ]);
+}
+else {
 $sql = "SELECT t.id as id, 
                t.title as title, 
                c.name as category, 
@@ -14,12 +32,26 @@ $sql = "SELECT t.id as id,
                t.created_at,
                th.`threat` as threatlvl
 FROM tickets as t 
-LEFT JOIN categories as c ON t.category = c.id
-LEFT JOIN threats as th ON t.threat = th.id
-ORDER BY `created_at` DESC
-";
-$query = $db->query($sql);
-$tickets = $query->fetchAll(2);
+INNER JOIN categories as c ON t.category = c.id
+INNER JOIN threats as th ON t.threat = th.id";
+    $prepare = $db->prepare($sql);
+    $prepare->execute();
+}
+$tickets = $prepare->fetchAll(2);
+
+/* cat toevoegen */
+$sql = "SELECT DISTINCT
+              c.id,
+              c.name as category
+FROM tickets as t 
+INNER JOIN categories as c ON t.category = c.id
+INNER JOIN threats as th ON t.threat = th.id";
+
+$prepare = $db->prepare($sql);
+$prepare->execute();
+
+$categories = $prepare->fetchAll(2);
+
 ?>
 <main>
     <div class="unreaded-tickets">
@@ -28,7 +60,24 @@ $tickets = $query->fetchAll(2);
             <tr>
                 <th scope="col">Ticket-Id</th>
                 <th scope="col">Title</th>
-                <th scope="col">Category</th>
+
+                    <th  <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown button
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <?php
+                            foreach ($categories as $category){
+                                echo "<a href=unreadedTickets.php?category= {$category['id']}> {$category['category']}</a>";
+
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+                </th>
+
                 <th scope="col">Threat level</th>
                 <th scope="col">Created_at</th>
 
@@ -53,8 +102,11 @@ $tickets = $query->fetchAll(2);
             }
             ?>
 
+            </body>
+
             </tbody>
         </table>
-    </div>
-
 </main>
+
+<?php
+require 'menus/footer.php';
