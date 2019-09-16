@@ -63,7 +63,6 @@ if ($_POST['type'] === 'ticketdetails') {
     $status = trim(htmlentities($_POST['solved']));
 
 
-
     //checks of someting is empty
     if (empty($title) || empty($threat) || empty($category) || empty($caller) || empty($customerId) || empty($status)) {
         $err = "Er zijn 1 of meer velden niet ingevuld.";
@@ -74,25 +73,44 @@ if ($_POST['type'] === 'ticketdetails') {
         $status = NULL;
     }
 
-    $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved) 
-            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved)";
-    $prepare = $db->prepare($sql);
-    $prepare->execute([
-        'customerid'    => $customerId,
-        'title'         => $title,
-        'threat'        => $threat,
-        'callerlevel'   => $caller,
-        'category'      => $category,
-        'solved'        => $status
-    ]);
-    $succ = "ticket voltooid";
-    header("location: ../../index.php?succ=$succ");
-    exit;
+    if ($_POST['solved'] = '1') {
+        $date = date('y-m-d H:i:s', time());
 
+
+        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved, solved_at) 
+            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved, :solvedat)";
+        $prepare = $db->prepare($sql);
+        $prepare->execute([
+            'customerid' => $customerId,
+            'title' => $title,
+            'threat' => $threat,
+            'callerlevel' => $caller,
+            'category' => $category,
+            'solved' => $status,
+            'solvedat' => $date
+        ]);
+        $succ = "ticket voltooid";
+        header("location: ../../index.php?succ=$succ");
+        exit;
+    }
+    else {
+        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved) 
+            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved)";
+        $prepare = $db->prepare($sql);
+        $prepare->execute([
+            'customerid' => $customerId,
+            'title' => $title,
+            'threat' => $threat,
+            'callerlevel' => $caller,
+            'category' => $category,
+            'solved' => $status
+        ]);
+        $succ = "ticket voltooid";
+        header("location: ../../index.php?succ=$succ");
+        exit;
+    }
 
 
 }
-
-
 header("location: ../../index.php");
 exit;
