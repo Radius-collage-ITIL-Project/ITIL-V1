@@ -69,9 +69,9 @@ if ($_POST['type'] === 'ticketdetails') {
         header("location: ../../createTicket.php?customerId=$customerId&err=$err");
         exit;
     }
-    if ($status === 0) {
-        $status = NULL;
-    }
+//    if ($status === 0) {
+//        $status = NULL;
+//    }
 
     if ($_POST['solved'] = '1') {
         $date = date('y-m-d H:i:s', time());
@@ -94,6 +94,9 @@ if ($_POST['type'] === 'ticketdetails') {
         exit;
     }
     else {
+        $date = date('y-m-d H:i:s', time());
+
+
         $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved) 
             VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved)";
         $prepare = $db->prepare($sql);
@@ -103,10 +106,11 @@ if ($_POST['type'] === 'ticketdetails') {
             'threat' => $threat,
             'callerlevel' => $caller,
             'category' => $category,
-            'solved' => $status
+            'solved' => $status,
         ]);
-        $succ = "ticket voltooid";
-        header("location: ../../index.php?succ=$succ");
+        $succ = "ticket NIET voltooid";
+//        header("location: ../../index.php?succ=$succ");
+        echo 'niet gelukt';
         exit;
     }
 
