@@ -60,11 +60,9 @@ if ($_POST['type'] === 'ticketdetails') {
     $category = trim(htmlentities($_POST['category']));
     $threat = trim(htmlentities($_POST['threat']));
     $caller = trim(htmlentities($_POST['caller-level']));
-    $status = trim(htmlentities($_POST['solved']));
-
 
     //checks of someting is empty
-    if (empty($title) || empty($threat) || empty($category) || empty($caller) || empty($customerId) || empty($status)) {
+    if (empty($title) || empty($threat) || empty($category) || empty($caller) || empty($customerId) ) {
         $err = "Er zijn 1 of meer velden niet ingevuld.";
         header("location: ../../createTicket.php?customerId=$customerId&err=$err");
         exit;
@@ -73,12 +71,12 @@ if ($_POST['type'] === 'ticketdetails') {
 //        $status = NULL;
 //    }
 
-    if ($_POST['solved'] = '1') {
+    if ($_POST['solved'] == '2') {
         $date = date('y-m-d H:i:s', time());
 
 
-        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved, solved_at) 
-            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved, :solvedat)";
+        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved_at) 
+            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solvedat)";
         $prepare = $db->prepare($sql);
         $prepare->execute([
             'customerid' => $customerId,
@@ -86,7 +84,6 @@ if ($_POST['type'] === 'ticketdetails') {
             'threat' => $threat,
             'callerlevel' => $caller,
             'category' => $category,
-            'solved' => $status,
             'solvedat' => $date
         ]);
         $succ = "ticket voltooid";
@@ -97,8 +94,8 @@ if ($_POST['type'] === 'ticketdetails') {
         $date = date('y-m-d H:i:s', time());
 
 
-        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category, solved) 
-            VALUES (:customerid, :title, :threat, :callerlevel, :category, :solved)";
+        $sql = "INSERT INTO tickets (customerid, title, threat, `caller-level`, category) 
+            VALUES (:customerid, :title, :threat, :callerlevel, :category)";
         $prepare = $db->prepare($sql);
         $prepare->execute([
             'customerid' => $customerId,
@@ -106,11 +103,9 @@ if ($_POST['type'] === 'ticketdetails') {
             'threat' => $threat,
             'callerlevel' => $caller,
             'category' => $category,
-            'solved' => $status,
         ]);
         $succ = "ticket NIET voltooid";
-//        header("location: ../../index.php?succ=$succ");
-        echo 'niet gelukt';
+        header("location: ../../index.php?succ=$succ");
         exit;
     }
 

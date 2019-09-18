@@ -118,8 +118,8 @@ echo ('Solution duration: '),$solved->d . "-" . $solved->m . "-" . $solved->y . 
                             <label for="solved">status</label>
                             <select class="custom-select" name="solved" required>
                                 <option value="">Ticket Status</option>
-                                <option value="0">unsolved</option>
-                                <option value="1">solved</option>
+                                <option value="1">unsolved</option>
+                                <option value="2">solved</option>
                             </select>
                         </div>
                     </div>
