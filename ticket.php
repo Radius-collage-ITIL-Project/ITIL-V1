@@ -34,7 +34,7 @@ if (!$ticket) {
 
 $sql = "SELECT n.* FROM `ticket-note` as tn
         INNER JOIN notes as n ON tn.note = n.id
-        WHERE ticket = :ticketId";
+        WHERE ticket = :ticketId ORDER BY note DESC";
 $prepare = $db->prepare($sql);
 $prepare->execute([
         'ticketId' => $ticketId
@@ -56,6 +56,13 @@ if ($ticket['solved'] == null || $ticket['solved'] == 0) {
 }
 ?>
 <main class="overflow-auto vh-100 pb-4">
+    <?php
+        if (isset($_GET['err'])) {
+            echo "<p class='alert-danger h2 p-3 my-2 rounded border border-danger'>{$_GET['err']}</p>";
+        } else if (isset($_GET['succ'])) {
+                echo "<p class='alert-success h2 p-3 my-2 rounded border border-success'>{$_GET['succ']}</p>";
+            }
+    ?>
     <h2>TICKET <?=$ticketId?></h2>
     <div class="shadow-sm border p-2 my-3">
         <h3 class="m-0">Klant Gegevens</h3>

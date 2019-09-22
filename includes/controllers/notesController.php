@@ -11,8 +11,9 @@ if ($_POST['type'] === "addNote") {
     $description = trim(htmlentities($_POST['ticketDescription']));
 
     if (empty($description) || empty($ticketId)) {
-        //header
-        //exit
+        $err = "De description is niet ingevuld!";
+        header("location: http://localhost/ITIL-V1/ticket.php?ticketId=$ticketId&err=$err");
+        exit;
     }
 
     $sql = "INSERT INTO notes (description) VALUES (:description)";
@@ -29,6 +30,10 @@ if ($_POST['type'] === "addNote") {
         'ticket' => $ticketId,
         'note' => $noteId
     ]);
+
+    $succ = "Notitie aangemaakt!";
+    header("location: http://localhost/ITIL-V1/ticket.php?ticketId=$ticketId&succ=$succ");
+    exit;
 }
 
 if ($_POST['type'] === "editnote") {
