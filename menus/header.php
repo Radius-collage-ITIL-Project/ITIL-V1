@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/custom.css">
     <title>ITIL | Project</title>
 </head>
-<body>
+<body class="overflow-hidden">
 <header>
     <div class="container-fluid d-flex justify-content-between bg-info align-items-center py-1 text-light">
         <h1 class="h4 m-0 p-0">ITIL | Project</h1>

@@ -24,6 +24,11 @@ $prepare->execute();
 $threats = $prepare->fetchAll(2);
 //dumpen van de opgehaalde data
 
+$sql = 'SELECT * FROM roles WHERE level < 999';
+$prepare = $db->prepare($sql);
+$prepare->execute();
+$callerLevels = $prepare->fetchAll(2);
+
 
 
 
@@ -70,8 +75,11 @@ $threats = $prepare->fetchAll(2);
                         <div class="form-group col-md-12">
                             <label for="caller">Lijn Niveau</label>
                             <select class="custom-select" name="caller-level" required>
-                                <option value="1">1e lijn</option>
-                                <option value="2">2e Lijn</option>
+                                <?php
+                                foreach ($callerLevels as $callerLevel) {
+                                    echo "<option value='{$callerLevel['id']}'>{$callerLevel['name']}</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
