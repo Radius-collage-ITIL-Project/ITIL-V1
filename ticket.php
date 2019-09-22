@@ -32,7 +32,7 @@ if (!$ticket) {
     exit;
 }
 
-$sql = "SELECT * FROM `ticket-note` as tn
+$sql = "SELECT n.* FROM `ticket-note` as tn
         INNER JOIN notes as n ON tn.note = n.id
         WHERE ticket = :ticketId";
 $prepare = $db->prepare($sql);
@@ -76,8 +76,9 @@ if ($ticket['solved'] == null || $ticket['solved'] == 0) {
 
     <div class="shadow-sm border p-2 my-3 overflow-auto">
         <h3 class="m-0">Notities</h3>
-        <form class="form" action="" method="post">
-            <input type="hidden" name="type" value="createNote">
+        <form class="form" action="./includes/controllers/notesController.php" method="post">
+            <input type="hidden" name="type" value="addNote">
+            <input type="hidden" name="ticketId" value="<?=$ticketId?>">
             <div class="form-group">
                 <label for="ticketDescription">Maak een nieuwe ticket:</label>
                 <textarea class="form-control" name="ticketDescription" id="ticketDescription" cols="30" rows="5"></textarea>
@@ -91,8 +92,7 @@ if ($ticket['solved'] == null || $ticket['solved'] == 0) {
             foreach ($notes as $note) {
                 echo "
                     <div class=\"border p-1 m-1 my-3\">
-                        <h4 class=\"h5\">Meneer: kaas</h4>
-                        <p>{$ticket['description']}</p>
+                        <p>{$note['description']}</p>
                     </div>
                 ";
             }
