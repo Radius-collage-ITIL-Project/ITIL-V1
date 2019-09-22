@@ -34,7 +34,7 @@ if ($_POST['type'] === 'ticketcustomerdetails') {
         exit;
     }
 
-    $sql = "INSERT INTO `customers`(`id`, `first`, `middel`, `last`, `email`, `phone`, `business`) 
+    $sql = "INSERT INTO `customers`(`id`, `first`, `middel`, `last`, `email`, `phone`, `business`)
             VALUES (:id, :first, :middel, :last, :email, :phone, :business)";
     $prepare = $db->prepare($sql);
     $prepare->execute([
@@ -78,12 +78,12 @@ if ($_POST['type'] === 'ticketdetails') {
         'callerlevel'   => $caller,
         'category'      => $category
     ]);
+
+    $ticketId = $db->lastInsertId();
+
     $succ = "ticket voltooid";
-    header("location: ../../index.php?succ=$succ");
+    header("location: ../../ticket.php?ticketid=$ticketId&customerid={$_POST['customerId']}&succ=$succ");
     exit;
-
-
-
 }
 
 header("location: ../../index.php");
